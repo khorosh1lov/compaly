@@ -122,10 +122,7 @@ exports.deleteUser = async (req, res, next) => {
 			throw new NotFoundError('User not found');
 		}
 
-		if (username) user.username = username;
-		if (email) user.email = email;
-
-		await user.de();
+		await user.deleteOne();
 
 		res.json(user);
 	} catch (err) {
