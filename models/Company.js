@@ -8,6 +8,14 @@ const CompanySchema = new mongoose.Schema({
 	},
 	address: String,
 	industry: String,
+	logo: {
+		type: String,
+	},
+	rating: {
+		type: Number,
+		min: 1,
+		max: 5,
+	},
 	// other properties...
 });
 
