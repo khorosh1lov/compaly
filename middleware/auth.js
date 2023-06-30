@@ -26,7 +26,7 @@ function auth(req, res, next) {
 function checkRole(roles) {
 	return function (req, res, next) {
 		if (!roles.includes(req.user.role)) {
-			throw new ForbiddenError(`Must be a ${role} to perform this action`);
+			throw new ForbiddenError(`Must be a ${roles} to perform this action`);
 		}
 		next();
 	};

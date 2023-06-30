@@ -1,21 +1,8 @@
 const express = require('express');
-const { getCompanies, createCompany } = require('../controllers/companyController');
+const { getCompanies, createCompany, getOneCompany, deleteCompany, editCompany } = require('../controllers/companyController');
 const { auth, checkRole } = require('../middleware/auth');
 
 const router = express.Router();
-
-/**
- * @swagger
- * /companies:
- *  get:
- *    tags:
- *      - Companies
- *    description: Use to get all companies
- *    responses:
- *      '200':
- *        description: A successful response with array of objects
- */
-router.get('/', getCompanies);
 
 /**
  * @swagger
@@ -30,6 +17,19 @@ router.get('/', getCompanies);
  *      industry:
  *        type: string
  */
+
+/**
+ * @swagger
+ * /companies:
+ *  get:
+ *    tags:
+ *      - Companies
+ *    description: Use to get all companies
+ *    responses:
+ *      '200':
+ *        description: A successful response with array of objects
+ */
+router.get('/', getCompanies);
 
 /**
  * @swagger
@@ -65,5 +65,78 @@ router.get('/', getCompanies);
  */
 router.post('/create', auth, checkRole(['admin', 'company']), createCompany);
 
+/**
+ * @swagger
+ * /companies/{id}:
+ *   get:
+ *     tags:
+ *       - Companies
+ *     description: Returns a single company
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: A company object
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/definitions/Company'
+ */
+router.get('/:id', getOneCompany);
+
+/**
+ * @swagger
+ * /companies/{id}/edit:
+ *   put:
+ *     tags:
+ *       - Companies
+ *     description: Updates a single company
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/Company'
+ *     responses:
+ *       200:
+ *         description: The updated company object
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/definitions/Company'
+ */
+router.put('/:id/edit', auth, checkRole(['admin', 'company']), editCompany);
+
+/**
+ * @swagger
+ * /companies/{id}/delete:
+ *   delete:
+ *     tags:
+ *       - Companies
+ *     description: Deletes a single company
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: The deleted company object
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/definitions/Company'
+ */
+router.delete('/:id/delete', auth, checkRole(['admin', 'company']), deleteCompany);
 
 module.exports = router;
