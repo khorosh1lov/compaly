@@ -111,6 +111,30 @@ exports.editUser = async (req, res, next) => {
 	}
 };
 
+exports.deleteUser = async (req, res, next) => {
+	if (req.user.id !== req.params.id) {
+		throw new ForbiddenError('You are not authorized to delete this profile');
+	}
+
+	try {
+		let user = await User.findById(req.params.id);
+		
+		if (!user) {
+			throw new NotFoundError('User not found');
+		}
+
+		await user.deleteOne();
+
+		res.json(user);
+	} catch (err) {
+		if (err instanceof HttpError) {
+			next(err);
+		} else {
+			next(new InternalServerError('An unexpected error occurred.'));
+		}
+	}
+};
+
 exports.getCurrentUser = async (req, res, next) => {
     try {
         const user = await User.findById(req.user.id).select('-password');
