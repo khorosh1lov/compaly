@@ -113,17 +113,19 @@ exports.editUser = async (req, res, next) => {
 
 exports.deleteUser = async (req, res, next) => {
 	if (req.user.id !== req.params.id) {
-		throw new ForbiddenError('You are not authorized to delete this profile');
+		throw new ForbiddenError('You are not authorized to edit this profile');
 	}
 
 	try {
 		let user = await User.findById(req.params.id);
-		
 		if (!user) {
 			throw new NotFoundError('User not found');
 		}
 
-		await user.deleteOne();
+		if (username) user.username = username;
+		if (email) user.email = email;
+
+		await user.de();
 
 		res.json(user);
 	} catch (err) {
