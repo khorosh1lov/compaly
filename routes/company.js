@@ -1,5 +1,7 @@
 const express = require('express');
-const { getCompanies, createCompany, getOneCompany, deleteCompany, editCompany, getReviews, createReview } = require('../controllers/companyController');
+const { getCompanies, createCompany, getOneCompany, deleteCompany, editCompany } = require('../controllers/companyController');
+const { getReviews, createReview } = require('../controllers/reviewController');
+const { getQuestions, createQuestion } = require('../controllers/interviewQuestionController');
 const { auth, checkRole } = require('../middleware/auth');
 
 const router = express.Router();
@@ -142,5 +144,9 @@ router.delete('/:id/delete', auth, checkRole(['admin', 'company']), deleteCompan
 router.get('/:id/reviews', getReviews);
 
 router.post('/:id/reviews', auth, checkRole(['admin', 'user']), createReview);
+
+router.get('/:id/interview-questions', getQuestions);
+
+router.post('/:id/interview-questions', auth, checkRole(['admin', 'user']), createQuestion);
 
 module.exports = router;

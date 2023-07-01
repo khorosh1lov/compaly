@@ -30,12 +30,15 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 const userRoutes = require('./routes/user');
 const companyRoutes = require('./routes/company');
 const reviewRoutes = require('./routes/review');
+const interviewQuestionRoutes = require('./routes/interviewQuestion');
 const bookmarkRoutes = require('./routes/bookmark');
+
 
 // Use Routes
 app.use('/user', userRoutes);
 app.use('/companies', companyRoutes);
 app.use('/reviews', reviewRoutes);
+app.use('/interview-questions', interviewQuestionRoutes);
 app.use('/bookmark', bookmarkRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.get('/', (req, res) => {
