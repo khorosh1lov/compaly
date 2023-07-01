@@ -1,5 +1,5 @@
 const express = require('express');
-const { getCompanies, createCompany, getOneCompany, deleteCompany, editCompany } = require('../controllers/companyController');
+const { getCompanies, createCompany, getOneCompany, deleteCompany, editCompany, getReviews, createReview } = require('../controllers/companyController');
 const { auth, checkRole } = require('../middleware/auth');
 
 const router = express.Router();
@@ -138,5 +138,9 @@ router.put('/:id/edit', auth, checkRole(['admin', 'company']), editCompany);
  *               $ref: '#/definitions/Company'
  */
 router.delete('/:id/delete', auth, checkRole(['admin', 'company']), deleteCompany);
+
+router.get('/:id/reviews', getReviews);
+
+router.post('/:id/reviews', auth, checkRole(['admin', 'user']), createReview);
 
 module.exports = router;

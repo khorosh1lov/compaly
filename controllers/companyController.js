@@ -1,4 +1,5 @@
 const Company = require('../models/Company');
+const Review = require('../models/Review');
 const { HttpError, InternalServerError, NotFoundError } = require('../errors/httpErrors');
 
 exports.getCompanies = async (req, res, next) => {
@@ -74,5 +75,33 @@ exports.deleteCompany = async (req, res, next) => {
 		} else {
 			next(new InternalServerError('An unexpected error occurred.'));
 		}
+	}
+};
+
+exports.getReviews = async (req, res, next) => {
+	try {
+		const reviews = await Review.find({ company: req.params.id });
+		res.json(reviews);
+	} catch (err) {
+		next(err);
+	}
+};
+
+exports.createReview = async (req, res, next) => {
+	try {
+		const company = await Company.findById(req.params.id);
+		if (!company) {
+			throw new NotFoundError('Company not found');
+		}
+
+		const review = new Review({
+			...req.body,
+			user: req.user.id,
+			company: req.params.id,
+		});
+		await review.save();
+		res.status(201).json(review);
+	} catch (err) {
+		next(err);
 	}
 };
