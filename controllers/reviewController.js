@@ -1,4 +1,5 @@
 const Review = require('../models/Review');
+const Company = require('../models/Company');
 const { NotFoundError } = require('../errors/httpErrors');
 
 exports.getReviews = async (req, res, next) => {

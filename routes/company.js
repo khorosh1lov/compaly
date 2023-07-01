@@ -88,7 +88,7 @@ router.post('/create', auth, checkRole(['admin', 'company']), createCompany);
  *             schema:
  *               $ref: '#/definitions/Company'
  */
-router.get('/:id', getOneCompany);
+router.get('/:slug', getOneCompany);
 
 /**
  * @swagger

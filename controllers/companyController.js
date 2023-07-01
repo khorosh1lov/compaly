@@ -47,7 +47,7 @@ exports.editCompany = async (req, res, next) => {
 
 exports.getOneCompany = async (req, res, next) => {
 	try {
-		const company = await Company.findById(req.params.id);
+		const company = await Company.findById(req.params.slug);
 		res.json(company);
 	} catch (err) {
 		if (err instanceof HttpError) {
