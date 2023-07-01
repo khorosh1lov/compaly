@@ -37,7 +37,7 @@ exports.editQuestion = async (req, res, next) => {
             throw new NotFoundError('Interview Question not found');
         }
 
-        // обновление полей отзыва здесь...
+        // TODO: Update Interview Question fields
 
         await question.save();
         res.json(question);

@@ -37,8 +37,8 @@ exports.editReview = async (req, res, next) => {
 			throw new NotFoundError('Review not found');
 		}
 
-		// обновление полей отзыва здесь...
-        
+		// TODO: Update Review fields
+
 		await review.save();
 		res.json(review);
 	} catch (err) {

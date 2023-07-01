@@ -27,6 +27,7 @@ exports.deleteBookmark = async (req, res, next) => {
 	try {
 		let bookmark = await Bookmark.findById(req.params.id);
 		if (!bookmark) {
+			// TODO: Use httpError class
 			return res.status(404).send({ error: 'Bookmark not found' });
 		}
 		await bookmark.deleteOne();

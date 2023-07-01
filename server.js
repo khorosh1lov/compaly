@@ -50,12 +50,15 @@ app.get('/', (req, res) => {
 	});
 });
 
+// Unknowing routes -> 404 Page
 app.use((req, res, next) => {
 	next(new NotFoundError('Page not found'));
 });
 
+// Server main problems -> 500
 app.use((err, req, res, next) => {
 	console.error(err);
+	
 	res.status(err.statusCode || 500);
 	res.json({
 		message: err.message,
@@ -63,6 +66,7 @@ app.use((err, req, res, next) => {
 	});
 });
 
+// Run the Server
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
 	console.log(`Server is running on port ${port}`);
