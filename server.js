@@ -18,7 +18,7 @@ const swaggerOptions = {
     info: {
       title: 'Library API',
       version: '1.0.0',
-      description: 'A simple Express Library API',
+      description: 'A Copal Express Library API',
     },
   },
   apis: ['./routes/*.js'],
@@ -32,7 +32,7 @@ const companyRoutes = require('./routes/company');
 const reviewRoutes = require('./routes/review');
 const interviewQuestionRoutes = require('./routes/interviewQuestion');
 const bookmarkRoutes = require('./routes/bookmark');
-
+const statisticRoutes = require('./routes/statistic');
 
 // Use Routes
 app.use('/user', userRoutes);
@@ -41,6 +41,7 @@ app.use('/reviews', reviewRoutes);
 app.use('/interview-questions', interviewQuestionRoutes);
 app.use('/bookmark', bookmarkRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use('/statistics', statisticRoutes);
 app.get('/', (req, res) => {
 	res.json({
 		message: 'Welcome to our Copal API',
@@ -48,7 +49,6 @@ app.get('/', (req, res) => {
 		docsUrl: `${process.env.BASE_URL}:${process.env.PORT}/api-docs`,
 	});
 });
-
 
 app.use((req, res, next) => {
 	next(new NotFoundError('Page not found'));
