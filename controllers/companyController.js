@@ -3,7 +3,20 @@ const { HttpError, InternalServerError, NotFoundError } = require('../errors/htt
 
 exports.getCompanies = async (req, res, next) => {
 	try {
-		const companies = await Company.find();
+		let query = Company.find();
+
+		// Filtration
+		if (req.query.industry) {
+			query = query.where('industry', req.query.industry);
+		}
+
+		// Sorting
+		if (req.query.sortBy) {
+			const sortByArray = req.query.sortBy.split(':');
+			query = query.sort({ [sortByArray[0]]: sortByArray[1] === 'desc' ? -1 : 1 });
+		}
+
+		const companies = await query.exec();
 		res.json(companies);
 	} catch (err) {
 		next(err);
