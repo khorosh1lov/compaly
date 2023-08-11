@@ -18,7 +18,7 @@ const swaggerOptions = {
     info: {
       title: 'Library API',
       version: '1.0.0',
-      description: 'A Copal Express Library API',
+      description: 'A Compaly Express Library API',
     },
   },
   apis: ['./routes/*.js'],
@@ -44,7 +44,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use('/statistics', statisticRoutes);
 app.get('/', (req, res) => {
 	res.json({
-		message: 'Welcome to our Copal API',
+		message: 'Welcome to our Compaly API',
 		version: 'v1',
 		docsUrl: `${process.env.BASE_URL}:${process.env.PORT}/api-docs`,
 	});
